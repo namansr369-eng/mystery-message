@@ -1,4 +1,4 @@
-import { resend } from "./resend";
+import { resend } from "./resend";  //importing the process.env for resend api.
 import VerificationEmail from "../../emails/VerificationEmail";
 import { ApiResponse } from "@/types/ApiResponse";
 

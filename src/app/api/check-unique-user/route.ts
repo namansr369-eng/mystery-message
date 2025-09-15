@@ -20,11 +20,12 @@ export async function GET (request: Request) {
        const result = UsernameSchema.safeParse(queryParam)
        
        if (!result.success) {
-        const usernameError = result.error.format().username?._errors || [];
+        const errorTree = z.treeifyError(result.error);
+        const usernameError = errorTree?.properties?.username?.errors;
 
         return Response.json({
             success: false,
-            message: usernameError?.length > 0 ? usernameError.join(", ") : "Invalid username"
+            message: usernameError?.length ? usernameError.join(", ") : "Invalid username"
         }, { status: 400 });
        }
 
@@ -36,7 +37,7 @@ export async function GET (request: Request) {
        if (existingVerifiedUser) {
         return Response.json({
             success: false,
-        message: "Username is already taken"
+           message: "Username is already taken"
         }, { status: 400})
        }
       

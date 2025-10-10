@@ -37,13 +37,13 @@ export async function GET (request: Request) {
        if (existingVerifiedUser) {
         return Response.json({
             success: false,
-           message: "Username is already taken"
+            message: "Username is already taken"
         }, { status: 400})
        }
       
        return Response.json({
             success: true,
-        message: "Username is available"
+            message: "Username is available"
         }, { status: 200})
 
     }catch (error) {

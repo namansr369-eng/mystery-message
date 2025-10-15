@@ -1,5 +1,4 @@
 import {z} from "zod";
-import { zhCN } from "zod/locales";
 
 
 // since here we are only validation the single field thus we haven't used the .object method of zod.

@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import Link from "next/link";
 
 
 const page = () => {
@@ -96,7 +97,7 @@ const page = () => {
           </p>
         </div>
     <Form {...register}>
-      <form onSubmit={register.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={register.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={register.control}
           name="username"
@@ -112,9 +113,6 @@ const page = () => {
               </FormControl>
               { isCheckingUsername && <span className="text-sm mt-1 text-blue-400"> <Loader className="mx-2 h-4 w-4 animate-spin inline-block" />Checking username...</span>}
               {!isCheckingUsername && <p className={`text-sm mt-1 ${usernameMessage=="Username is available" && ! isCheckingUsername ? 'text-green-400' : 'text-red-400'} `}>{usernameMessage}</p>}
-              <FormDescription>
-                Enter the user Name you want to use.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -128,9 +126,6 @@ const page = () => {
               <FormControl>
                 <Input placeholder="email" {...field}  />
               </FormControl>
-              <FormDescription>
-                Enter the email you want to use.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -144,18 +139,17 @@ const page = () => {
               <FormControl>
                 <Input placeholder="password" {...field}  />
               </FormControl>
-              <FormDescription>
-                Enter the password you want to use.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isSubmitting}>
+        <Button className="float-right ml-[100%]" type="submit" disabled={isSubmitting}>
           {
             isSubmitting ? <> <Loader className="mx-2 h-4 w-4 animate-spin inline-block"  /> Signing Up... </> : ("Sign Up")
           }
         </Button>
+
+        <h2>Already have an account? <Link className="text-sm font-bold text-gray-500 bg-gray-300/80 py-1 px-2 rounded" href="/sign-in">Sign In</Link></h2>
       </form>
     </Form>
       </div>

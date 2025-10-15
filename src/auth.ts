@@ -9,9 +9,9 @@ export const { handlers, signIn, auth } = NextAuth({
     Credentials({
       credentials: {
         username: {
-          type: "email",
-          label: "Email",
-          placeholder: "johndoe@gmail.com",
+          type: "username",
+          label: "Username",
+          placeholder: "johndoe",
         },
         password: {
           type: "password",
@@ -25,15 +25,14 @@ export const { handlers, signIn, auth } = NextAuth({
         try {
           const user = await UserModel.findOne({
             $or: [
-              { email: credentials.email },
-              { username: credentials.email },
+              { username: credentials.username },
             ],
           });
           if (!user) {
-            throw new Error("NO_USER");
+            return null;
           }
           if (!user.isVerified) {
-            throw new Error("NOT_VERIFIED");
+            return null;
           }
 
           const isPasswordCorrect = await bcrypt.compare(
@@ -44,10 +43,11 @@ export const { handlers, signIn, auth } = NextAuth({
           if (isPasswordCorrect) {
             return user;
           } else {
-            throw new Error("INVALID_PASSWORD");
+            return null;
           }
         } catch (err: any) {
-          throw new Error(err);
+          console.error("Error in authorize function: ", err.message);
+          return null;
         }
       },
     }),
